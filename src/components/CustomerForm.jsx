@@ -4,10 +4,7 @@ import { useFormik } from 'formik';
 import CountryFlag from 'react-country-flag';
 import bgImg from '../assets/bgimg.jpg';
 const countryCodes = [
-  { code: '+994', country: 'Azerbaijan', flag: 'AZ' },
-  { code: '+90', country: 'Turkey', flag: 'TR' },
-  { code: '+1', country: 'USA', flag: 'US' },
-  { code: '+7', country: 'Russia', flag: 'RU' },
+  { code: '+994', country: 'Azerbaijan', flag: 'AZ' }
 ];
 
 const CustomerForm = ({ onAdd }) => {
@@ -19,8 +16,8 @@ const CustomerForm = ({ onAdd }) => {
       .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|ru|org)$/, "Email must be valid and end with .com, .ru, or .org")
       .required("Email is required"),
     telephone: Yup.string()
-      .matches(/^\+\d{1,3} \d{9}$/, "Telephone must be in the format: +<country-code> <number>")
-      .required("Telephone number is required"),
+      .matches(/^(50|51|55|99|10|60|70|77)[2-9]{1}[\d]{6}$/, "Phone number must be correct!")
+      .required("Phone number is required"),
   });
 
   const formik = useFormik({
@@ -37,7 +34,7 @@ const CustomerForm = ({ onAdd }) => {
     const selectedCode = e.target.value;
     const selectedCountry = countryCodes.find((country) => country.code === selectedCode);
     setSelectedFlag(selectedCountry.flag);
-    formik.setFieldValue("telephone", `${selectedCode} ${formik.values.telephone.split(' ').slice(1).join(' ')}`);
+    formik.setFieldValue("telephone", `${formik.values.telephone.split(' ').slice(1).join(' ')}`);
   };
 
   return (
@@ -77,9 +74,7 @@ const CustomerForm = ({ onAdd }) => {
           <CountryFlag countryCode={selectedFlag} svg style={{ width: '2em', height: '2em' }} />
           
           {/* Dropdown for selecting country code */}
-          <select
-            name="countryCode"
-            className="border p-2 w-full sm:w-24 rounded ml-2"
+          <p
             onChange={handleCountryCodeChange}
             value={formik.values.telephone.split(' ')[0]} // Set dropdown to current prefix
           >
@@ -88,14 +83,14 @@ const CustomerForm = ({ onAdd }) => {
                 {code} 
               </option>
             ))}
-          </select>
+          </p>
         </div>
 
         {/* Telephone input field */}
         <input
           type="text"
           name="telephone"
-          placeholder="Telephone"
+          placeholder="Phone number"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.telephone}

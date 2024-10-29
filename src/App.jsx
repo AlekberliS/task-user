@@ -8,7 +8,6 @@ import Dashboard from "./pages/Dashboard";
 import Feed from "./pages/Feed";
 import Chats from "./pages/Chats";
 import CalendarPage from "./pages/Calendar";
-import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Tasks from "./pages/Tasks";
 import Register from "./pages/Register"; 
@@ -52,7 +51,7 @@ function App() {
               <Route path="/chats" element={user ? <Chats /> : <Navigate to="/" />} />
               <Route path="/tasks" element={user ? <Tasks /> : <Navigate to="/" />} />
               <Route path="/calendar" element={user ? <CalendarPage /> : <Navigate to="/" />} />
-              <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/" />} />
+
               <Route path="/customers" element={user ? <CustomerManagement /> : <Navigate to="/" />} />
             </Routes>
           </main>
